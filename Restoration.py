@@ -16,7 +16,6 @@ botTKN = configData["Token"]
 # Discord Client
 client = discord.Client()
 
-# Discord bot Token
 
 @client.event
 async def on_ready():
