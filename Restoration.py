@@ -21,7 +21,7 @@ repeat = False
 ron = "\n\n**Would you like to:**\n:one: Continue learning more about this topic\n:two: Move onto another topic"
 
 pref = "."
-listOfRes = "**Please type in any number corresponding to the topic below to learn more about it!**\n\n:one: Extinction of red pandas\n:two: Saving the ocean\n:three: Pandemic affecting our daily lives\n:four: Story behind black history month\n:five: Muslim persecution in China\n:six: Gun violence in America\n:seven: Our carbon footprint\n:eight: Saving the Amazon Rainforest\n:nine: Global warming\n:keycap_ten: Wildlife loss and their factors"
+listOfRes = "**Please type in any number corresponding to the topic below to learn more about it!**\n\n:one: Extinction of red pandas\n:two: Saving the ocean\n:three: Story behind black history month \n:four: Pandemic affecting our daily lives\n:five: Muslim persecution in China\n:six: Gun violence in America\n:seven: Our carbon footprint\n:eight: Saving the Amazon Rainforest\n:nine: Global warming\n:keycap_ten: Wildlife loss and their factors"
 topicmessage = " Below is a list of choices you can choose to learn more about this topic:"
 # Discord Client
 client = discord.Client()
@@ -44,6 +44,7 @@ async def on_message(message):
     global start
     global panda
     global ocean
+    global black
     global repeat
     messaged = str(message.content)
     msg = messaged.lower()
@@ -140,7 +141,43 @@ async def on_message(message):
         repeat = True
         return
     if ocean and msg == "4" and repeat == False:
-        await send(" Overall try to reduce your carbon footprint and support teamseas https://teamseas.org/ and support WWF for marine conservation https://www.worldwildlife.org/initiatives/oceans"+ron)
+        await send("Overall try to reduce your carbon footprint and support teamseas https://teamseas.org/ and support WWF for marine conservation https://www.worldwildlife.org/initiatives/oceans"+ron)
+        repeat = True
+        return
+
+
+    # Black History Month
+    if repeat and black and msg == "1":
+        start = True
+        repeat = False
+        black = False
+    if repeat and black and msg == "2":
+        black = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "3" or start and msg == "1" and not black:
+        await send("**Nice to see you are interested in the story of black history month!"+topicmessage+"**\n:one: What has happened to Black People?\n:two: What’s the current situation for them?\n:three: How to support and restore their racial justice?")
+        black = True
+        start = False
+        return
+    
+    if black and msg == "1" and repeat == False:
+        await send("Black people had been enslaved in the 1600s by Europeans and then shipped to America to work on plantations. The rural South, where slavery had gained the strongest hold in North America, suffered an economic crisis in the years following the Revolutionary War. Tobacco, the most profitable cash crop at the time, had depleted the soil, while rice and indigo failed to yield much profit. As a result, the cost of enslaved individuals was falling, and the future of slavery appeared to be in doubt. "+ron)
+        repeat = True
+        return
+    if black and msg == "2" and repeat == False:
+        await send("The visceral public display of George Floyd’s murder and COVID-19 had engulfed the U.S in a manner markedly distinct from Ferguson, Black Lives Matter (BLM) and other previous nation-wide racial justice movements. At the same time, with the world and the mainstream media gripped by the pandemic's sweeping halt, BLM took to social media, releasing raw footage of Floyd and other Black victims to show that they were not isolated incidents, but rather the remnants of a larger scourge of racially charged police violence sweeping the country.  "+ron)
+        repeat = True
+        return
+    if black and msg == "3" and repeat == False:
+        await send("Visit a Black or African American history museum, support black businesses. Most importantly, donate to Black organisations and charities such as https://secure.actblue.com/donate/ms_blm_homepage_2019 https://www.tmcf.org/online-gift/  and http://www.blackgirlscode.com/donate/"+ron)
+        repeat = True
+        return
+    if black and msg == "4" and repeat == False:
+        await send("Overall try to reduce your carbon footprint and support teamseas https://teamseas.org/ and support WWF for marine conservation https://www.worldwildlife.org/initiatives/oceans"+ron)
         repeat = True
         return
 
