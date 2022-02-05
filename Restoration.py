@@ -9,8 +9,15 @@ load_dotenv('.env')
 
 start = False
 panda = False
+ocean = False
+black = False
+
+
+
+
+
+
 repeat = False
-repeatPanda = False
 ron = "\n\n**Would you like to:**\n:one: Continue learning more about this topic\n:two: Move onto another topic"
 
 pref = "."
@@ -36,8 +43,8 @@ async def on_ready():
 async def on_message(message):
     global start
     global panda
+    global ocean
     global repeat
-    global repeatPanda
     messaged = str(message.content)
     msg = messaged.lower()
     send = message.channel.send
@@ -68,6 +75,7 @@ async def on_message(message):
     if repeat and panda and msg == "1":
         start = True
         repeat = False
+        panda = False
     if repeat and panda and msg == "2":
         panda = False
         await send(listOfRes)
@@ -75,7 +83,7 @@ async def on_message(message):
         repeat = False
         return
 
-    if start and msg == "1":
+    if start and msg == "1" or start and msg=="1" and not panda:
         await send("**Nice to know you have an interest in red pandas!"+topicmessage+"**\n:one: What are red pandas?\n:two: How and why are they endangered?\n:three: How can you help?\n:four: Why should you care?")
         panda = True
         start = False
@@ -92,7 +100,7 @@ async def on_message(message):
         return
 
     if panda and msg == "3" and repeat == False:
-        await send("Spreading awareness, donating and fundraising, participating in ecotourism, and working against the red panda trade are all ways to become engaged."+ron)
+        await send("Spreading awareness, donating and fundraising, participating in ecotourism, and working against the red panda trade are all ways to become engaged. A website that you can contribute to https://redpandanetwork.org/ "+ron)
         repeat = True
         return
 
@@ -102,12 +110,43 @@ async def on_message(message):
         return
 
     # Saving the Ocean
-    # if start and msg == "2":
-    #     await send("**Good to see others who are interested in saving our oceans!"+topicmessage+"**\n:one: What’s happening to our oceans?\n:two: Why care about marine life and the ocean in general?\n:three: How can you stop contributing to this disaster?\n:four: How to support more?")
-    #     panda = True
-    #     start = False
-    #     return
+    if repeat and ocean and msg == "1":
+        start = True
+        repeat = False
+        ocean = False
+    if repeat and ocean and msg == "2":
+        ocean = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "2" or start and msg == "1" and not ocean:
+        await send("**Good to see others who are interested in saving our oceans!"+topicmessage+"**\n:one: What’s happening to our oceans?\n:two: Why care about marine life and the ocean in general?\n:three: How can you stop contributing to this disaster?\n:four: How to support more?")
+        ocean = True
+        start = False
+        return
     
+    if ocean and msg == "1" and repeat == False:
+        await send("Sea levels are rising as a result of global warming, posing a hazard to coastal population areas. Many agricultural chemicals and nutrients end up in coastal waterways, causing oxygen depletion and the death of marine plants and crustaceans. Sewage and other runoff from factories and industrial plants are discharged into the oceans."+ron)
+        repeat = True
+        return
+    if ocean and msg == "2" and repeat == False:
+        await send("The oxygen we breathe is produced by the ocean, which absorbs 50 times more carbon dioxide than our atmosphere. The ocean, which covers 70% of the Earth's surface and transfers heat from the equator to the poles, regulates our temperature and weather patterns by transporting heat from the equator to the poles. "+ron)
+        repeat = True
+        return
+    if ocean and msg == "3" and repeat == False:
+        await send(" Try to avoid use of vehicles for simple tasks. Conserve energy and water, like turning the tap off while brushing your teeth or not taking extra long showers. Stop the use of plastic items. Don’t purchase endangered fish or seafood."+ron)
+        repeat = True
+        return
+    if ocean and msg == "4" and repeat == False:
+        await send(" Overall try to reduce your carbon footprint and support teamseas https://teamseas.org/ and support WWF for marine conservation https://www.worldwildlife.org/initiatives/oceans"+ron)
+        repeat = True
+        return
+
+
+
+
 
 
 
