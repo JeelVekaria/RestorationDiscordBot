@@ -13,6 +13,7 @@ ocean = False
 black = False
 forest = False
 china = False
+america = False
 
 
 
@@ -41,6 +42,7 @@ async def on_message(message):
     global black
     global forest
     global china
+    global america
     global repeat
     messaged = str(message.content)
     msg = messaged.lower()
@@ -223,7 +225,7 @@ async def on_message(message):
         repeat = False
         return
 
-    if start and msg == "4" or start and msg == "1" and not china:
+    if start and msg == "5" or start and msg == "1" and not china:
         await send("**Good topic to be knowledgable about!"+topicmessage+"**\n:one: Who are they?\n:two: How many people are being affected?\n:three: Why bother?\n:four: How to support victims?")
         china = True
         start = False
@@ -247,6 +249,40 @@ async def on_message(message):
         return
 
 
+    # What’s happening with arms in the U.S?
+    if repeat and america and msg == "1":
+        start = True
+        repeat = False
+        america = False
+    if repeat and america and msg == "2":
+        america = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "6" or start and msg == "1" and not america:
+        await send("**This is a good topic that you should know about!"+topicmessage+"**\n:one: What’s happening with arms in the U.S?\n:two: Who is impacted? \n:three: Why care?\n:four: How to support victims?")
+        america = True
+        start = False
+        return
+    
+    if america and msg == "1" and repeat == False:
+        await send("Xinjiang, formally known as the Xinjiang Uyghur Autonomous Region, is home to over 12 million Uyghurs, the majority of whom are Muslim (XUAR). The Uyghurs speak a language that is akin to Turkish and consider themselves to be culturally and ethnically related to Central Asian countries. They make up less than half of the population of Xinjiang. https://www.bbc.com/news/world-asia-china-22278037 "+ron)
+        repeat = True
+        return
+    if america and msg == "2" and repeat == False:
+        await send(" 12 million and counting more because its Muslims in general too. It’s an ongoing genocide in the “internment camps”"+ron)
+        repeat = True
+        return
+    if america and msg == "3" and repeat == False:
+        await send(" This is against human rights! It shouldn’t be happening to anyone.  "+ron)
+        repeat = True
+        return
+    if america and msg == "4" and repeat == False:
+        await send("How to support victims? Spread awareness on the Internet and donate to American hospitals or gather people for protests. http://gvsfoundation.org/"+ron)
+        repeat = True
+        return
 
 
 
