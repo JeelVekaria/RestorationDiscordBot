@@ -12,6 +12,7 @@ panda = False
 ocean = False
 black = False
 forest = False
+china = False
 
 
 
@@ -39,6 +40,7 @@ async def on_message(message):
     global ocean
     global black
     global forest
+    global china
     global repeat
     messaged = str(message.content)
     msg = messaged.lower()
@@ -206,6 +208,41 @@ async def on_message(message):
         return
     if forest and msg == "4" and repeat == False:
         await send("Support by donating to https://www.wwf.org.uk/where-we-work/amazon and other organizations. Cut down on the use of paper and save our trees! Reduce oil and beef consumption, oil is a pollutant in the environment and cows produce methane which is another pollutant in our environment, plus they need grasslands to feed on meaning more deforestation.. Invest more into rainforest communities! "+ron)
+        repeat = True
+        return
+
+    # Uyghurs Persecution in China 
+    if repeat and china and msg == "1":
+        start = True
+        repeat = False
+        china = False
+    if repeat and china and msg == "2":
+        china = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "4" or start and msg == "1" and not china:
+        await send("**Good topic to be knowledgable about!"+topicmessage+"**\n:one: Who are they?\n:two: How many people are being affected?\n:three: Why bother?\n:four: How to support victims?")
+        china = True
+        start = False
+        return
+    
+    if china and msg == "1" and repeat == False:
+        await send("Xinjiang, formally known as the Xinjiang Uyghur Autonomous Region, is home to over 12 million Uyghurs, the majority of whom are Muslim (XUAR). The Uyghurs speak a language that is akin to Turkish and consider themselves to be culturally and ethnically related to Central Asian countries. They make up less than half of the population of Xinjiang. https://www.bbc.com/news/world-asia-china-22278037 "+ron)
+        repeat = True
+        return
+    if china and msg == "2" and repeat == False:
+        await send(" 12 million and counting more because its Muslims in general too. It’s an ongoing genocide in the “internment camps”"+ron)
+        repeat = True
+        return
+    if china and msg == "3" and repeat == False:
+        await send(" This is against human rights! It shouldn’t be happening to anyone.  "+ron)
+        repeat = True
+        return
+    if china and msg == "4" and repeat == False:
+        await send(" Speak up for them, spread awareness on social media. Donate to relief organisations. https://icnareliefcanada.ca/uyghur-relief "+ron)
         repeat = True
         return
 
