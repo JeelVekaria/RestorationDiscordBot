@@ -15,6 +15,8 @@ forest = False
 china = False
 carbon = False
 america = False
+normal = False
+warming = False
 
 
 
@@ -45,6 +47,8 @@ async def on_message(message):
     global china
     global america
     global carbon
+    global normal
+    global warming
     global repeat
     messaged = str(message.content)
     msg = messaged.lower()
@@ -301,7 +305,7 @@ async def on_message(message):
         return
 
     if start and msg == "7" or start and msg == "1" and not carbon:
-        await send("**This is a good topic that you should know about!"+topicmessage+"**\n:one:What in the world is that?\n:two: Why should we care? \n:three: How to make a difference?\n:four: How to support victims?")
+        await send("**This is a good topic that you should know about!"+topicmessage+"**\n:one:What in the world is that?\n:two: Why should we care? \n:three: How to make a difference?")
         carbon = True
         start = False
         return
@@ -315,20 +319,82 @@ async def on_message(message):
         repeat = True
         return
     if carbon and msg == "3" and repeat == False:
-        await send(" This is against human rights! It shouldn’t be happening to anyone.  "+ron)
-        repeat = True
-        return
-    if carbon and msg == "4" and repeat == False:
         await send("Global warming is intensified by increased greenhouse gas emissions. It hastens climate change, which has severe consequences for our world. By making climate-friendly decisions in our daily lives, we can all help to combat global warming. Such decisions include not using automobiles for simple tasks that can be accomplished by walking or biking and using cloth bags instead of plastic ones in grocery stores. https://europa.eu/youth/get-involved/sustainable-development/how-reduce-my-carbon-footprint_en "+ron)
         repeat = True
         return
 
+    # Normal Life (Pre-COVID)
+    if repeat and normal and msg == "1":
+        start = True
+        repeat = False
+        normal = False
+    if repeat and normal and msg == "2":
+        normal = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "8" or start and msg == "1" and not normal:
+        await send("**This is a good topic that you should know about!"+topicmessage+"**\n:one:What it used to be like before COVID-19 came along?\n:two: How much has this virus affected the world? \n:three: What can we do to stop it’s mutation?\n:four: Why bother caring?")
+        normal = True
+        start = False
+        return
+    
+    if normal and msg == "1" and repeat == False:
+        await send("Life was normal and we didn’t have an annoying piece of cloth on our faces which we call the masks. Students used to go and learn inside a school building not through an online web conference tool such as Google Meet or Zoom. We all had to sit in our homes and quarantine as well which I’m pretty sure was boring for most of us. "+ron)
+        repeat = True
+        return
+    if normal and msg == "2" and repeat == False:
+        await send(" This virus has killed 5.73 million people worldwide and numerous economies have crashed, small businesses are having a tough time managing with all the covid restrictions. People are experiencing a lot of anxiety and stress, meaning MENTAL HEALTH IS BEING AFFECTED! "+ron)
+        repeat = True
+        return
+    if normal and msg == "3" and repeat == False:
+        await send("We can continue social distance, wearing our masks and sanitizing more often. In cases of possible COVID symptoms we must stay home, take care of ourselves, and keep in mind the safety of others. BE UP TO DATE WITH VACCINES! Vaccines are our strongest weapon against this virus after self isolation."+ron)
+        repeat = True
+        return
+    if normal and msg == "4" and repeat == False:
+        await send("We should care because we want more social interactions, no more masks and freedom from all these restrictions put in place to prevent this virus. Most importantly we must care because people's lives are at stake. You could also donate to hospitals and food banks and make a difference for people who are facing a tremendous amount of stress coping with COVID due to the financial crisis. https://www.frontlinefund.ca/ and https://www.foodbankscanada.ca/COVID-19.aspx "+ron)
+        repeat = True
+        return
+
+
+    # Global Warming
+    if repeat and warming and msg == "1":
+        start = True
+        repeat = False
+        warming = False
+    if repeat and warming and msg == "2":
+        warming = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "9" or start and msg == "1" and not warming:
+        await send("**This is a good topic that you should know about!"+topicmessage+"**\n:one:What is it?\n:two: How is it affecting the world?\n:three: How is it related to other crises? \n:four: What can we do to prevent it? ")
+        warming = True
+        start = False
+        return
+    
+    if warming and msg == "1" and repeat == False:
+        await send("The term \"global warming\" refers to the increase in the global average temperature. It has to deal with the Earth's overall climate, not the weather on any individual day. https://www.ducksters.com/science/environment/global_warming.php "+ron)
+        repeat = True
+        return
+    if warming and msg == "2" and repeat == False:
+        await send("Storms, heat waves, floods, and droughts are all worsening as a result of rising temperatures. A warmer temperature produces an atmosphere that can gather, hold, and drop more water, altering weather patterns such that wet areas grow wetter and dry ones become drier. https://www.nrdc.org/stories/are-effects-global-warming-really-bad#:~:text=More%20frequent%20and%20severe%20weather,wetter%20and%20dry%20areas%20drier. "+ron)
+        repeat = True
+        return
+    if warming and msg == "3" and repeat == False:
+        await send("Climate change intensifies competition for resources such as land, food, and water, escalating social conflicts and, increasingly, resulting in mass relocation. Climate change is a risk multiplier, worsening existing problems. https://www.un.org/en/un75/climate-crisis-race-we-can-win#:~:text=The%20effects%20of%20climate%20change,makes%20worse%20already%20existing%20challenges. "+ron)
+        repeat = True
+        return
+    if warming and msg == "4" and repeat == False:
+        await send("Power our homes with renewable energy, buy longer lasting light bulbs, go on a vegan diet (meat plays a major role in the contribution of climate change - see topics above), or invest in energy efficient appliances. There are even more ways to make a difference from your end like donate or start a fundraiser and even spread the word on social media! https://www.canadahelps.org/en/donate-to-environmental-charities-giving-back-to-the-planet/  and https://www.theatlantic.com/science/archive/2020/12/how-to-donate-to-fight-climate-change-effectively/617248/ "+ron)
+        repeat = True
+        return
 
 
 
 
-
-
-
-# client.run(botTKN)
 client.run(os.getenv('tkn'))
