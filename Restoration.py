@@ -17,10 +17,7 @@ carbon = False
 america = False
 normal = False
 warming = False
-
-
-
-
+wildlife = False
 
 repeat = False
 ron = "\n\n**Would you like to:**\n:one: Continue learning more about this topic\n:two: Move onto another topic"
@@ -49,6 +46,7 @@ async def on_message(message):
     global carbon
     global normal
     global warming
+    global wildlife
     global repeat
     messaged = str(message.content)
     msg = messaged.lower()
@@ -394,6 +392,40 @@ async def on_message(message):
         repeat = True
         return
 
+    # Wildlife Loss
+    if repeat and wildlife and msg == "1":
+        start = True
+        repeat = False
+        wildlife = False
+    if repeat and wildlife and msg == "2":
+        wildlife = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "10" or start and msg == "1" and not wildlife:
+        await send("**This is a good topic that you should know about!"+topicmessage+"**\n:one:What’s the reason of wildlife loss?\n:two: How is earth affected?\n:three: Why should we care? \n:four: How can we support the animals? ")
+        wildlife = True
+        start = False
+        return
+    
+    if wildlife and msg == "1" and repeat == False:
+        await send("The biggest hazard to wildlife survival in the United States is habitat loss, which occurs as a result of habitat destruction, fragmentation, or degradation. When an ecosystem is drastically altered by human activities like agriculture, oil and gas exploration, commercial development, or water diversion, it may no longer be able to offer the food, water, cover, and places to raise young that species require to thrive. Every day, animals have fewer and fewer places to call home. https://www.nwf.org/Educational-Resources/Wildlife-Guide/Threats-to-Wildlife/Habitat-Loss "+ron)
+        repeat = True
+        return
+    if wildlife and msg == "2" and repeat == False:
+        await send("What are the ramifications of a species' extinction? If a species serves a particular purpose in its ecosystem, its extinction can have cascading repercussions down the food chain (a \"trophic cascade\"), affecting other species as well as the ecosystem as a whole. https://news.climate.columbia.edu/2019/03/26/endangered-species-matter/ "+ron)
+        repeat = True
+        return
+    if wildlife and msg == "3" and repeat == False:
+        await send("When a wild animal's natural habitat is destroyed, the animals will flee to the human environment. There will be no more room for animals, and they will be forced to die. Plants, on the other hand, will grow massively, disrupting the entire life cycle and feeding cycle. https://goprep.co/what-will-happen-if-the-natural-habitat-of-a-wild-animal-is-i-1njjg3 "+ron)
+        repeat = True
+        return
+    if wildlife and msg == "4" and repeat == False:
+        await send("Volunteer or donate to an animal shelter. Start a fundraiser for endangered animals see topic 1 as an example (Hint: Red Pandas). \nDonate to an animal welfare organisation. \nhttps://www.petsafe.net/learn/how-to-help-animals-in-your-community.\nLink to donate for animals https://www.canadahelps.org/en/explore/charities/category/animals/ \nhttps://ontariospca.ca/how-to-help/other-ways-to-donate/"+ron)
+        repeat = True
+        return
 
 
 
