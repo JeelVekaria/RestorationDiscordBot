@@ -11,7 +11,7 @@ start = False
 panda = False
 ocean = False
 black = False
-
+forest = False
 
 
 
@@ -21,17 +21,10 @@ repeat = False
 ron = "\n\n**Would you like to:**\n:one: Continue learning more about this topic\n:two: Move onto another topic"
 
 pref = "."
-listOfRes = "**Please type in any number corresponding to the topic below to learn more about it!**\n\n:one: Extinction of red pandas\n:two: Saving the ocean\n:three: Story behind black history month \n:four: Pandemic affecting our daily lives\n:five: Muslim persecution in China\n:six: Gun violence in America\n:seven: Our carbon footprint\n:eight: Saving the Amazon Rainforest\n:nine: Global warming\n:keycap_ten: Wildlife loss and their factors"
+listOfRes = "**Please type in any number corresponding to the topic below to learn more about it!**\n\n:one: Extinction of Red Pandas\n:two: Saving our Ocean\n:three: Promoting Black History Month \n:four: Saving the Amazon Rainforest\n:five: Uyghurs Persecution in China\n:six: Gun Violence in America\n:seven: Our Carbon Footprint\n:eight: Pandemic Affecting our Daily Lives\n:nine: Global warming\n:keycap_ten: Wildlife Loss and their Factors"
 topicmessage = " Below is a list of choices you can choose to learn more about this topic:"
 # Discord Client
 client = discord.Client()
-
-
-def get_quote():
-    response = requests.get('https://zenquotes.io/api/random')
-    json_data = json.loads(response.text)
-    quote = json_data[0]['q'] + " -"+json_data[0]['a']
-    return(quote)
 
 @client.event
 async def on_ready():
@@ -45,25 +38,25 @@ async def on_message(message):
     global panda
     global ocean
     global black
+    global forest
     global repeat
     messaged = str(message.content)
     msg = messaged.lower()
     send = message.channel.send
 
+    if msg == ".end":
+        await send('Thank you for using Learn it All! Hope you learned something new today.')
+        quit()
+
+    if msg == ".cls":
+        for i in range(4):
+            await send(file=discord.File('clear.png'))
+        return
     if message.author == client.user:
         return
 
     if msg == pref+"status":
         await send("I'm up and running! Please type \".summon\" to begin this session!")
-        return
-
-    if msg == pref+"testing":
-        print("It works!")
-        await send("yep I'm working")
-        return
-
-    if msg == pref+"quote":
-        await send(get_quote())
         return
 
     # Main part of the project
@@ -85,7 +78,7 @@ async def on_message(message):
         return
 
     if start and msg == "1" or start and msg=="1" and not panda:
-        await send("**Nice to know you have an interest in red pandas!"+topicmessage+"**\n:one: What are red pandas?\n:two: How and why are they endangered?\n:three: How can you help?\n:four: Why should you care?")
+        await send("**Nice to know you have an interest in red pandas!"+topicmessage+"**\n:one: What are red pandas?\n:two: How and why are they endangered?\n:three: How can we help?\n:four: Why should we care?")
         panda = True
         start = False
         return
@@ -123,13 +116,13 @@ async def on_message(message):
         return
 
     if start and msg == "2" or start and msg == "1" and not ocean:
-        await send("**Good to see others who are interested in saving our oceans!"+topicmessage+"**\n:one: What’s happening to our oceans?\n:two: Why care about marine life and the ocean in general?\n:three: How can you stop contributing to this disaster?\n:four: How to support more?")
+        await send("**Good to see others who are interested in saving our oceans!"+topicmessage+"**\n:one: What’s happening to our oceans?\n:two: Why care about marine life and the ocean in general?\n:three: How can we stop contributing to this disaster?\n:four: How to support more?")
         ocean = True
         start = False
         return
     
     if ocean and msg == "1" and repeat == False:
-        await send("Sea levels are rising as a result of global warming, posing a hazard to coastal population areas. Many agricultural chemicals and nutrients end up in coastal waterways, causing oxygen depletion and the death of marine plants and crustaceans. Sewage and other runoff from factories and industrial plants are discharged into the oceans."+ron)
+        await send("Sea levels are rising as a result of global warming, posing a hazard to coastal population areas. Many agricultural chemicals and nutrients end up in coastal waterways, causing oxygen depletion and the death of marine plants and crustaceans. Sewage and other runoff from factories and industrial plants are discharged into the oceans. Below is a useful link to explain more about this:\nhttps://www.nationalgeographic.com/environment/article/ocean-threats#:~:text=Global%20warming%20is%20causing%20sea,other%20runoff%20into%20the%20oceans. "+ron)
         repeat = True
         return
     if ocean and msg == "2" and repeat == False:
@@ -141,7 +134,7 @@ async def on_message(message):
         repeat = True
         return
     if ocean and msg == "4" and repeat == False:
-        await send("Overall try to reduce your carbon footprint and support teamseas https://teamseas.org/ and support WWF for marine conservation https://www.worldwildlife.org/initiatives/oceans"+ron)
+        await send("Overall try to reduce your carbon footprint and support local or well known organizations that are fighting these issues or similar issues, such as teamseas https://teamseas.org/"+ron)
         repeat = True
         return
 
@@ -181,6 +174,40 @@ async def on_message(message):
         repeat = True
         return
 
+    # Amazon rainforest
+    if repeat and forest and msg == "1":
+        start = True
+        repeat = False
+        forest = False
+    if repeat and forest and msg == "2":
+        forest = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "4" or start and msg == "1" and not forest:
+        await send("**Yay this is a nice topic! Let's learn more about the Amazon Rainforest!"+topicmessage+"**\n:one: What’s the issue with Amazon Forest?\n:two: How is the area impacted and its significance?\n:three: Why should we care?\n:four: How can we help?")
+        forest = True
+        start = False
+        return
+    
+    if forest and msg == "1" and repeat == False:
+        await send("Deforestation. Deforestation is one of the most serious and well-known issues in the Amazon. While trees have been taken down for logging, industrialization, and human expansion, farming is responsible for the most intense and dramatic deforestation in the Amazon rainforest.  "+ron)
+        repeat = True
+        return
+    if forest and msg == "2" and repeat == False:
+        await send(" Growing temperatures and altering rain patterns in the Amazon will almost certainly result from global climate change and increased deforestation over time, affecting the region's forests, water availability, biodiversity, agriculture, and human health. "+ron)
+        repeat = True
+        return
+    if forest and msg == "3" and repeat == False:
+        await send(" The Amazon rainforest is crucial in managing the global oxygen and carbon cycles. It produces about 6% of the world's oxygen and has long been assumed to operate as a carbon sink, absorbing enormous amounts of carbon dioxide from the atmosphere quickly. "+ron)
+        repeat = True
+        return
+    if forest and msg == "4" and repeat == False:
+        await send("Support by donating to https://www.wwf.org.uk/where-we-work/amazon and other organizations. Cut down on the use of paper and save our trees! Reduce oil and beef consumption, oil is a pollutant in the environment and cows produce methane which is another pollutant in our environment, plus they need grasslands to feed on meaning more deforestation.. Invest more into rainforest communities! "+ron)
+        repeat = True
+        return
 
 
 
@@ -192,9 +219,7 @@ async def on_message(message):
 
 
 
-    if msg == ".end":
-        await send('Thank you for using Learn it All! Hope you learned something new today.')
-        quit()
+
 
 # client.run(botTKN)
 client.run(os.getenv('tkn'))
