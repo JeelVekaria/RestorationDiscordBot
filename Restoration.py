@@ -13,6 +13,7 @@ ocean = False
 black = False
 forest = False
 china = False
+carbon = False
 america = False
 
 
@@ -43,6 +44,7 @@ async def on_message(message):
     global forest
     global china
     global america
+    global carbon
     global repeat
     messaged = str(message.content)
     msg = messaged.lower()
@@ -286,6 +288,40 @@ async def on_message(message):
 
 
 
+    # Our Carbon Footprint
+    if repeat and carbon and msg == "1":
+        start = True
+        repeat = False
+        carbon = False
+    if repeat and carbon and msg == "2":
+        carbon = False
+        await send(listOfRes)
+        start = True
+        repeat = False
+        return
+
+    if start and msg == "7" or start and msg == "1" and not carbon:
+        await send("**This is a good topic that you should know about!"+topicmessage+"**\n:one:What in the world is that?\n:two: Why should we care? \n:three: How to make a difference?\n:four: How to support victims?")
+        carbon = True
+        start = False
+        return
+    
+    if carbon and msg == "1" and repeat == False:
+        await send("The total amount of greenhouse gases (including carbon dioxide and methane) produced by our actions is referred to as our carbon footprint. By 2050, the average worldwide carbon footprint per year must be under 2 tonnes to have the best chance of averting a 2°C rise in global temperatures. https://www.nature.org/en-us/get-involved/how-to-help/carbon-footprint-calculator/#:~:text=A%20carbon%20footprint%20is%20the,are%20generated%20by%20our%20actions.&text=To%20have%20the%20best%20chance,under%202%20tons%20by%202050. "+ron)
+        repeat = True
+        return
+    if carbon and msg == "2" and repeat == False:
+        await send("The planet's resources are consumed in various amounts by the world's seven billion people. According to UN estimates, the global population will reach 9.7 billion by 2050, and more than 11 billion by 2100. Population growth increases emissions and DEPLETES THE PLANET’S RESOURCES! "+ron)
+        repeat = True
+        return
+    if carbon and msg == "3" and repeat == False:
+        await send(" This is against human rights! It shouldn’t be happening to anyone.  "+ron)
+        repeat = True
+        return
+    if carbon and msg == "4" and repeat == False:
+        await send("Global warming is intensified by increased greenhouse gas emissions. It hastens climate change, which has severe consequences for our world. By making climate-friendly decisions in our daily lives, we can all help to combat global warming. Such decisions include not using automobiles for simple tasks that can be accomplished by walking or biking and using cloth bags instead of plastic ones in grocery stores. https://europa.eu/youth/get-involved/sustainable-development/how-reduce-my-carbon-footprint_en "+ron)
+        repeat = True
+        return
 
 
 
